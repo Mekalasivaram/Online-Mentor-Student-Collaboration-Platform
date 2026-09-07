@@ -40,6 +40,9 @@ RUN php artisan config:clear || true
 RUN php artisan route:clear || true
 RUN php artisan view:clear || true
 
+# Create SQLite database
+RUN touch database/database.sqlite
+
 EXPOSE 10000
 
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
+CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=${PORT:-10000}
